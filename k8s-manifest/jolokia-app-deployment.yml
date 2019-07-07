@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jolokia-sample-app
+  labels:
+    app: jolokia-sample-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jolokia-sample-app
+  template:
+    metadata:
+      labels:
+        app: jolokia-sample-app
+    spec:
+      containers:
+        - name: jolokia-sample-app
+          imagePullPolicy: IfNotPresent
+          image: esaka/jolokia-sample-app:1.0-SNAOSHOT
+          workingDir: /opt/app
+          command: ["java", "-javaagent:jolokia-jvm-1.6.2-agent.jar=port=7777,host=0.0.0.0", "-jar", "jolokia-sample-app-1.0-SNAPSHOT.jar"]
+          ports:
+            - containerPort: 7777
