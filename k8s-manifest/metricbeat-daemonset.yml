@@ -25,7 +25,7 @@ data:
             - module: jolokia
               metricsets: ["jmx"]
               namespace: "jmx"
-              hosts: "${data.jolokia.url}"
+              hosts: ["${data.jolokia.url}"]
               jmx.mappings:
               - mbean: "java.lang:type=Runtime"
                 attributes:
@@ -162,8 +162,6 @@ spec:
     spec:
       serviceAccountName: metricbeat
       terminationGracePeriodSeconds: 30
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: metricbeat
           image: docker.elastic.co/beats/metricbeat:7.2.0
